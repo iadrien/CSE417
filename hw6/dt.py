@@ -6,7 +6,9 @@ Created on Tue Nov 27 15:24:58 2018
 """
 
 from sklearn import tree
-
+from graphviz import Source
+import os
+os.environ["PATH"] += os.pathsep + "C:\\Users\\Po Adrich\\Anaconda3\\envs\\py27\\Library\\bin\\graphviz\\"
 clf = tree.DecisionTreeClassifier()
 clf.criterion = "entropy"
 
@@ -19,3 +21,13 @@ Y=[-1,-1,-1,1,1]
 clf.fit(X,Y)
 
 dot_data = tree.export_graphviz(clf, out_file='tree.dot') 
+
+from subprocess import call
+call(['dot', '-Tpng', 'tree.dot', '-o', 'tree.png', '-Gdpi=600'])
+
+# Display in python
+import matplotlib.pyplot as plt
+plt.figure(figsize = (14, 18))
+plt.imshow(plt.imread('tree.png'))
+plt.axis('off');
+plt.show();
